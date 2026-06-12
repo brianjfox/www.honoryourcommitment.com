@@ -1,0 +1,40 @@
+// Condensed country list for form selects, weighted toward the campaign's
+// most-represented nationalities followed by the rest alphabetically.
+export const COUNTRIES = [
+  'China',
+  'Brazil',
+  'United States',
+  'India',
+  'Türkiye',
+  'South Africa',
+  'United Kingdom',
+  'Russia',
+  'Canada',
+  'Australia',
+  'Hong Kong',
+  'United Arab Emirates',
+  'Nigeria',
+  'Pakistan',
+  'Egypt',
+  'Iran',
+  'Lebanon',
+  'Mexico',
+  'Argentina',
+  'Venezuela',
+  'Angola',
+  'Mozambique',
+  'Ukraine',
+  'Vietnam',
+  'Philippines',
+  'Indonesia',
+  'Singapore',
+  'South Korea',
+  'Japan',
+  'Saudi Arabia',
+  'Israel',
+  'Other',
+]
+
+export const APPLICATION_YEARS = [
+  2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024,
+]

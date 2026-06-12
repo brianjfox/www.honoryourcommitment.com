@@ -1,0 +1,405 @@
+/* ============================================================
+   Portugal Must Honor Its Commitments — Design System
+   Institutional / public-policy campaign aesthetic.
+   White background · dark blue primary · gold accents.
+   ============================================================ */
+
+:root {
+  /* Brand palette */
+  --navy-900: #061a30;
+  --navy-800: #0a2342;
+  --navy-700: #123257;
+  --navy-600: #1c4670;
+  --navy-100: #e7edf4;
+  --navy-050: #f4f7fb;
+
+  --gold-600: #b8902f;
+  --gold-500: #c9a14a;
+  --gold-400: #d9b665;
+  --gold-100: #f7efda;
+
+  --ink: #15212e;
+  --ink-soft: #46586a;
+  --line: #dfe5ec;
+  --white: #ffffff;
+
+  --danger: #9c2b2b;
+  --ok: #2f6b4f;
+
+  /* Typography */
+  --font-sans: 'Libre Franklin', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+
+  /* Layout */
+  --maxw: 1180px;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-sm: 0 1px 2px rgba(6, 26, 48, 0.06), 0 2px 8px rgba(6, 26, 48, 0.05);
+  --shadow-md: 0 6px 24px rgba(6, 26, 48, 0.1);
+  --gutter: clamp(16px, 5vw, 40px);
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--navy-800);
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5em;
+}
+
+h1 {
+  font-size: clamp(2rem, 5.2vw, 3.4rem);
+}
+h2 {
+  font-size: clamp(1.55rem, 3.6vw, 2.4rem);
+}
+h3 {
+  font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+a {
+  color: var(--navy-700);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul {
+  margin: 0 0 1rem;
+  padding-left: 1.2rem;
+}
+li {
+  margin-bottom: 0.4rem;
+}
+
+/* ---------- Layout helpers ---------- */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: clamp(48px, 8vw, 96px);
+}
+.section--tight {
+  padding-block: clamp(36px, 5vw, 60px);
+}
+.section--navy {
+  background: var(--navy-800);
+  color: var(--white);
+}
+.section--navy h1,
+.section--navy h2,
+.section--navy h3 {
+  color: var(--white);
+}
+.section--soft {
+  background: var(--navy-050);
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-600);
+  margin-bottom: 0.75rem;
+}
+.section--navy .eyebrow {
+  color: var(--gold-400);
+}
+
+.lead {
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  color: var(--ink-soft);
+  max-width: 70ch;
+}
+.section--navy .lead {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.center {
+  text-align: center;
+}
+.measure {
+  max-width: 72ch;
+}
+.measure-narrow {
+  max-width: 56ch;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.1;
+  padding: 0.85em 1.5em;
+  border-radius: var(--radius-sm);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.08s ease, background 0.15s ease, color 0.15s ease,
+    border-color 0.15s ease, box-shadow 0.15s ease;
+  text-align: center;
+}
+.btn:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+.btn:active {
+  transform: translateY(0);
+}
+.btn:focus-visible {
+  outline: 3px solid var(--gold-400);
+  outline-offset: 2px;
+}
+
+.btn--gold {
+  background: var(--gold-500);
+  color: var(--navy-900);
+  border-color: var(--gold-500);
+}
+.btn--gold:hover {
+  background: var(--gold-400);
+  border-color: var(--gold-400);
+}
+
+.btn--navy {
+  background: var(--navy-800);
+  color: var(--white);
+  border-color: var(--navy-800);
+}
+.btn--navy:hover {
+  background: var(--navy-700);
+  border-color: var(--navy-700);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--navy-800);
+  border-color: var(--navy-800);
+}
+.btn--outline:hover {
+  background: var(--navy-800);
+  color: var(--white);
+}
+
+.section--navy .btn--outline,
+.hero .btn--outline,
+.page-hero .btn--outline {
+  color: var(--white);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+.section--navy .btn--outline:hover,
+.hero .btn--outline:hover,
+.page-hero .btn--outline:hover {
+  background: var(--white);
+  color: var(--navy-800);
+  border-color: var(--white);
+}
+
+.btn--lg {
+  font-size: 1.08rem;
+  padding: 1em 1.8em;
+}
+.btn--block {
+  width: 100%;
+}
+
+/* ---------- Cards ---------- */
+.card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(20px, 3vw, 32px);
+  box-shadow: var(--shadow-sm);
+}
+.card--accent {
+  border-top: 4px solid var(--gold-500);
+}
+
+/* ---------- Grid ---------- */
+.grid {
+  display: grid;
+  gap: clamp(18px, 3vw, 28px);
+}
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (max-width: 860px) {
+  .grid-3,
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Badges / tags ---------- */
+.tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.28em 0.7em;
+  border-radius: 999px;
+  background: var(--navy-100);
+  color: var(--navy-700);
+}
+.tag--gold {
+  background: var(--gold-100);
+  color: var(--gold-600);
+}
+
+/* ---------- Forms ---------- */
+.field {
+  margin-bottom: 1.1rem;
+}
+.field label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.92rem;
+  margin-bottom: 0.35rem;
+  color: var(--navy-800);
+}
+.field .req {
+  color: var(--danger);
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--ink);
+  padding: 0.7em 0.85em;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--navy-600);
+  box-shadow: 0 0 0 3px rgba(28, 70, 112, 0.15);
+}
+.field textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+.field .hint {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  margin-top: 0.3rem;
+}
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 600px) {
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+}
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+.checkbox input {
+  width: auto;
+  margin-top: 0.25rem;
+}
+
+.form-success {
+  background: var(--navy-050);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--ok);
+  border-radius: var(--radius);
+  padding: clamp(24px, 4vw, 40px);
+}
+
+/* ---------- Accessibility ---------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 1000;
+  background: var(--gold-500);
+  color: var(--navy-900);
+  padding: 0.6em 1em;
+  font-weight: 700;
+  border-radius: 0 0 var(--radius-sm) 0;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
