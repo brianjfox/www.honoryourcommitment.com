@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useI18n } from '../i18n/index.jsx'
 import Counter from '../components/Counter.jsx'
 import ActionsBanner from '../components/ActionsBanner.jsx'
-import { INTERVIEWS } from '../data/media.js'
 import { CAMPAIGN_STATS } from '../data/cases.js'
 import { API_BASE } from '../config.js'
 
@@ -156,61 +155,45 @@ export default function MediaCenter() {
         </section>
       )}
 
-      {/* Coverage + interviews */}
-      <section className="section section--soft">
-        <div className="container grid grid-2">
-          {coverageItems.length > 0 && (
-            <div>
-              <h2>{t('media.coverage')}</h2>
-              <ul className="link-list">
-                {coverageItems.map((c) => (
-                  <li key={c.id}>
-                    <span className="link-list__meta">
-                      {c.outlet}
-                      {c.date ? ` · ${formatDate(c.date, lang)}` : ''}
-                    </span>
-                    <span className="tip">
-                      <a href={c.url} target="_blank" rel="noopener noreferrer">
-                        {c.title}
-                      </a>
-                      {c.summary && (
-                        <span className="tip__bubble" role="tooltip">
-                          <span className="tip__label">
-                            {t('media.summaryLabel')}
-                          </span>
-                          {c.summary}
-                        </span>
-                      )}
-                    </span>
-                    <a
-                      className="link-list__cta"
-                      href={c.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {t('media.readArticle')} →
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          <div>
-            <h2>{t('media.interviews')}</h2>
+      {/* News coverage — live feed only; hidden when there's none. */}
+      {coverageItems.length > 0 && (
+        <section className="section section--soft">
+          <div className="container">
+            <h2>{t('media.coverage')}</h2>
             <ul className="link-list">
-              {INTERVIEWS.map((iv) => (
-                <li key={iv.id}>
+              {coverageItems.map((c) => (
+                <li key={c.id}>
                   <span className="link-list__meta">
-                    {iv.speaker} · {formatDate(iv.date, lang)}
+                    {c.outlet}
+                    {c.date ? ` · ${formatDate(c.date, lang)}` : ''}
                   </span>
-                  <a href={`#${iv.id}`}>{iv.title}</a>
-                  <span className="link-list__cta">{t('media.watch')} ▶</span>
+                  <span className="tip">
+                    <a href={c.url} target="_blank" rel="noopener noreferrer">
+                      {c.title}
+                    </a>
+                    {c.summary && (
+                      <span className="tip__bubble" role="tooltip">
+                        <span className="tip__label">
+                          {t('media.summaryLabel')}
+                        </span>
+                        {c.summary}
+                      </span>
+                    )}
+                  </span>
+                  <a
+                    className="link-list__cta"
+                    href={c.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {t('media.readArticle')} →
+                  </a>
                 </li>
               ))}
             </ul>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Media enquiries */}
       <section className="section section--tight">
