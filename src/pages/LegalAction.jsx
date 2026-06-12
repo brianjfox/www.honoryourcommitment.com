@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useI18n } from '../i18n/index.jsx'
 import {
   useForm,
@@ -6,15 +7,20 @@ import {
   Select,
   Textarea,
   ConsentField,
+  Honeypot,
   FormSuccess,
+  submitErrorMessage,
 } from '../components/Form.jsx'
 import { COUNTRIES, APPLICATION_YEARS } from '../data/countries.js'
+import { postJSON } from '../lib/api.js'
+import Turnstile from '../components/Turnstile.jsx'
 import ActionsBanner from '../components/ActionsBanner.jsx'
 import CTAGroup from '../components/CTAGroup.jsx'
 
 export default function LegalAction() {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
   const v = useValidators()
+  const [token, setToken] = useState(null)
   const form = useForm({
     fullName: '',
     email: '',
@@ -22,6 +28,7 @@ export default function LegalAction() {
     appYear: '',
     message: '',
     consent: false,
+    botcheck: '',
   })
 
   const validate = (vals) => ({
@@ -30,6 +37,19 @@ export default function LegalAction() {
     country: v.required(vals.country),
     consent: vals.consent ? undefined : t('form.consentRequired'),
   })
+
+  const submit = (vals) =>
+    postJSON('/api/claimants', {
+      fullName: vals.fullName.trim(),
+      email: vals.email.trim(),
+      country: vals.country,
+      applicationYear: vals.appYear ? parseInt(vals.appYear, 10) : undefined,
+      message: vals.message.trim() || undefined,
+      consentProcessing: vals.consent,
+      locale: lang,
+      turnstileToken: token || undefined,
+      botcheck: vals.botcheck || '',
+    })
 
   return (
     <>
@@ -67,6 +87,7 @@ export default function LegalAction() {
               title={t('legal.successTitle')}
               body={t('legal.successBody')}
             >
+              <p className="form-success__note">{t('form.checkEmail')}</p>
               <div style={{ marginTop: '1.2rem' }}>
                 <CTAGroup variant="outline" />
               </div>
@@ -74,7 +95,7 @@ export default function LegalAction() {
           ) : (
             <form
               className="card"
-              onSubmit={form.handleSubmit(validate)}
+              onSubmit={form.handleSubmit(validate, submit)}
               noValidate
             >
               <h2>{t('legal.formTitle')}</h2>
@@ -141,6 +162,18 @@ export default function LegalAction() {
                 onChange={form.set('consent')}
                 error={form.errors.consent}
               />
+
+              <Honeypot
+                value={form.values.botcheck}
+                onChange={form.set('botcheck')}
+              />
+              <Turnstile onVerify={setToken} onExpire={() => setToken(null)} />
+
+              {form.submitError && (
+                <p className="form-error" role="alert">
+                  {submitErrorMessage(t, form.submitError)}
+                </p>
+              )}
 
               <button
                 type="submit"

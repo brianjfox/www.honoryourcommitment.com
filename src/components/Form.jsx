@@ -2,15 +2,17 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useI18n } from '../i18n/index.jsx'
 
-/* Lightweight controlled-form helpers. Submissions are handled client-side
-   (no backend in this build) — values are validated and a success state is
-   shown. Wire `onSubmit` to an API endpoint when one is available. */
+/* Lightweight controlled-form helpers. `handleSubmit(validate, submitFn)`
+   validates, then awaits `submitFn(values)` (a real API call). On success it
+   shows the success state; on failure it records `submitError` (the API error
+   code) for the page to render. */
 
 export function useForm(initial) {
   const [values, setValues] = useState(initial)
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState(null)
 
   const set = (name) => (e) => {
     const val =
@@ -19,7 +21,7 @@ export function useForm(initial) {
     if (errors[name]) setErrors((er) => ({ ...er, [name]: undefined }))
   }
 
-  const handleSubmit = (validate) => (e) => {
+  const handleSubmit = (validate, submitFn) => async (e) => {
     e.preventDefault()
     const errs = validate ? validate(values) : {}
     setErrors(errs)
@@ -29,15 +31,28 @@ export function useForm(initial) {
       return
     }
     setSubmitting(true)
-    // Simulate an async submit; replace with a real request.
-    setTimeout(() => {
-      setSubmitting(false)
+    setSubmitError(null)
+    try {
+      if (submitFn) await submitFn(values)
       setSubmitted(true)
       window.scrollTo({ top: 0, behavior: 'smooth' })
-    }, 600)
+    } catch (err) {
+      setSubmitError(err?.code || 'server_error')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
-  return { values, set, errors, setErrors, submitted, submitting, handleSubmit }
+  return {
+    values,
+    set,
+    errors,
+    setErrors,
+    submitted,
+    submitting,
+    submitError,
+    handleSubmit,
+  }
 }
 
 export function Field({
@@ -202,6 +217,44 @@ export function ConsentField({ name, text, checked, onChange, error }) {
       )}
     </div>
   )
+}
+
+/* Honeypot field — hidden off-screen from humans. Bots that auto-fill every
+   input will populate it; the API silently drops any submission where it's
+   non-empty. Sent to the API as `botcheck`. */
+export function Honeypot({ value, onChange }) {
+  return (
+    <div
+      aria-hidden="true"
+      style={{
+        position: 'absolute',
+        left: '-5000px',
+        width: '1px',
+        height: '1px',
+        overflow: 'hidden',
+      }}
+    >
+      <label>
+        Leave this field empty
+        <input
+          type="text"
+          name="botcheck"
+          tabIndex={-1}
+          autoComplete="off"
+          value={value}
+          onChange={onChange}
+        />
+      </label>
+    </div>
+  )
+}
+
+// Map an API error code to a translated, user-facing message.
+export function submitErrorMessage(t, code) {
+  if (code === 'captcha_failed') return t('form.captchaError')
+  if (code === 'rate_limited') return t('form.rateError')
+  if (code === 'network') return t('form.networkError')
+  return t('form.submitError')
 }
 
 // Shared success panel shown after any form submission.

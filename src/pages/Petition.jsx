@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useI18n } from '../i18n/index.jsx'
 import {
   useForm,
@@ -6,16 +7,21 @@ import {
   Select,
   Checkbox,
   ConsentField,
+  Honeypot,
   FormSuccess,
+  submitErrorMessage,
 } from '../components/Form.jsx'
 import { COUNTRIES } from '../data/countries.js'
 import { CAMPAIGN_STATS } from '../data/cases.js'
+import { postJSON } from '../lib/api.js'
+import Turnstile from '../components/Turnstile.jsx'
 import ActionsBanner from '../components/ActionsBanner.jsx'
 import CTAGroup from '../components/CTAGroup.jsx'
 
 export default function Petition() {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
   const v = useValidators()
+  const [token, setToken] = useState(null)
   const form = useForm({
     firstName: '',
     lastName: '',
@@ -24,6 +30,7 @@ export default function Petition() {
     processing: false,
     public: false,
     contact: false,
+    botcheck: '',
   })
 
   const validate = (vals) => ({
@@ -33,6 +40,20 @@ export default function Petition() {
     country: v.required(vals.country),
     processing: vals.processing ? undefined : t('form.consentRequired'),
   })
+
+  const submit = (vals) =>
+    postJSON('/api/signatures', {
+      firstName: vals.firstName.trim(),
+      lastName: vals.lastName.trim(),
+      email: vals.email.trim(),
+      country: vals.country,
+      consentProcessing: vals.processing,
+      consentPublic: !!vals.public,
+      consentContact: !!vals.contact,
+      locale: lang,
+      turnstileToken: token || undefined,
+      botcheck: vals.botcheck || '',
+    })
 
   return (
     <>
@@ -70,6 +91,7 @@ export default function Petition() {
                 title={t('petition.successTitle')}
                 body={t('petition.successBody')}
               >
+                <p className="form-success__note">{t('form.checkEmail')}</p>
                 <div style={{ marginTop: '1.2rem' }}>
                   <CTAGroup variant="outline" />
                 </div>
@@ -77,7 +99,7 @@ export default function Petition() {
             ) : (
               <form
                 className="card"
-                onSubmit={form.handleSubmit(validate)}
+                onSubmit={form.handleSubmit(validate, submit)}
                 noValidate
               >
                 <h2>{t('petition.formTitle')}</h2>
@@ -150,6 +172,18 @@ export default function Petition() {
                     onChange={form.set('contact')}
                   />
                 </div>
+
+                <Honeypot
+                  value={form.values.botcheck}
+                  onChange={form.set('botcheck')}
+                />
+                <Turnstile onVerify={setToken} onExpire={() => setToken(null)} />
+
+                {form.submitError && (
+                  <p className="form-error" role="alert">
+                    {submitErrorMessage(t, form.submitError)}
+                  </p>
+                )}
 
                 <button
                   type="submit"

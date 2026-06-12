@@ -279,6 +279,12 @@ export default {
     privacyPolicy: 'Privacy Policy',
     optional: 'optional',
     submitting: 'Submitting…',
+    submitError: 'Something went wrong. Please try again.',
+    captchaError: 'Please complete the verification and try again.',
+    rateError: 'Too many attempts. Please wait a moment and try again.',
+    networkError: 'Could not reach the server. Check your connection and try again.',
+    checkEmail:
+      'Please check your email and click the confirmation link — your submission only counts once confirmed.',
     investmentTypes: [
       'Real estate',
       'Capital transfer',

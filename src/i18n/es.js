@@ -283,6 +283,12 @@ export default {
     privacyPolicy: 'Política de Privacidad',
     optional: 'opcional',
     submitting: 'Enviando…',
+    submitError: 'Algo salió mal. Inténtelo de nuevo.',
+    captchaError: 'Complete la verificación e inténtelo de nuevo.',
+    rateError: 'Demasiados intentos. Espere un momento e inténtelo de nuevo.',
+    networkError: 'No se pudo contactar con el servidor. Compruebe su conexión e inténtelo de nuevo.',
+    checkEmail:
+      'Revise su correo y haga clic en el enlace de confirmación — su envío solo cuenta una vez confirmado.',
     investmentTypes: [
       'Inmobiliario',
       'Transferencia de capital',

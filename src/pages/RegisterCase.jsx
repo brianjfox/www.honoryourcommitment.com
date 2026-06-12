@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useI18n } from '../i18n/index.jsx'
 import {
   useForm,
@@ -6,15 +7,20 @@ import {
   Select,
   Textarea,
   ConsentField,
+  Honeypot,
   FormSuccess,
+  submitErrorMessage,
 } from '../components/Form.jsx'
 import { COUNTRIES, APPLICATION_YEARS } from '../data/countries.js'
+import { postJSON } from '../lib/api.js'
+import Turnstile from '../components/Turnstile.jsx'
 import ActionsBanner from '../components/ActionsBanner.jsx'
 import CTAGroup from '../components/CTAGroup.jsx'
 
 export default function RegisterCase() {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
   const v = useValidators()
+  const [token, setToken] = useState(null)
   const form = useForm({
     firstName: '',
     lastName: '',
@@ -28,6 +34,7 @@ export default function RegisterCase() {
     status: '',
     story: '',
     consent: false,
+    botcheck: '',
   })
 
   const validate = (vals) => ({
@@ -39,6 +46,28 @@ export default function RegisterCase() {
     investType: v.required(vals.investType),
     consent: vals.consent ? undefined : t('form.consentRequired'),
   })
+
+  const submit = (vals) => {
+    const amount = vals.amount !== '' ? Number(vals.amount) : undefined
+    const family = vals.family !== '' ? parseInt(vals.family, 10) : undefined
+    return postJSON('/api/cases', {
+      firstName: vals.firstName.trim(),
+      lastName: vals.lastName.trim(),
+      email: vals.email.trim(),
+      phone: vals.phone.trim() || undefined,
+      country: vals.country,
+      applicationYear: parseInt(vals.appYear, 10),
+      investmentType: vals.investType,
+      investmentAmount: Number.isFinite(amount) ? amount : undefined,
+      familyMembers: Number.isFinite(family) ? family : undefined,
+      status: vals.status || undefined,
+      story: vals.story.trim() || undefined,
+      consentProcessing: vals.consent,
+      locale: lang,
+      turnstileToken: token || undefined,
+      botcheck: vals.botcheck || '',
+    })
+  }
 
   const investmentTypes = t('form.investmentTypes')
   const statuses = t('form.statuses')
@@ -60,6 +89,7 @@ export default function RegisterCase() {
               title={t('register.successTitle')}
               body={t('register.successBody')}
             >
+              <p className="form-success__note">{t('form.checkEmail')}</p>
               <div style={{ marginTop: '1.2rem' }}>
                 <CTAGroup variant="outline" />
               </div>
@@ -67,7 +97,7 @@ export default function RegisterCase() {
           ) : (
             <form
               className="card"
-              onSubmit={form.handleSubmit(validate)}
+              onSubmit={form.handleSubmit(validate, submit)}
               noValidate
             >
               <h2>{t('register.formTitle')}</h2>
@@ -210,6 +240,18 @@ export default function RegisterCase() {
                 error={form.errors.consent}
               />
               <p className="field-note">{t('register.confidential')}</p>
+
+              <Honeypot
+                value={form.values.botcheck}
+                onChange={form.set('botcheck')}
+              />
+              <Turnstile onVerify={setToken} onExpire={() => setToken(null)} />
+
+              {form.submitError && (
+                <p className="form-error" role="alert">
+                  {submitErrorMessage(t, form.submitError)}
+                </p>
+              )}
 
               <button
                 type="submit"

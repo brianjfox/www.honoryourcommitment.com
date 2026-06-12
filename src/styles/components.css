@@ -681,6 +681,29 @@
   color: var(--ink-soft);
   text-align: center;
 }
+.turnstile {
+  margin: 0.4rem 0 1rem;
+  min-height: 65px;
+}
+.form-error {
+  margin: 0 0 1rem;
+  padding: 0.7rem 0.9rem;
+  background: #fdecec;
+  border: 1px solid #f1c4c4;
+  border-left: 4px solid var(--danger);
+  border-radius: var(--radius-sm);
+  color: var(--danger);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.form-success__note {
+  background: var(--gold-100);
+  border-left: 4px solid var(--gold-500);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem;
+  font-size: 0.92rem;
+  color: var(--navy-800);
+}
 .form-success__check {
   display: grid;
   place-items: center;

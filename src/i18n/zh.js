@@ -278,6 +278,11 @@ export default {
     privacyPolicy: '隐私政策',
     optional: '可选',
     submitting: '提交中…',
+    submitError: '出现错误，请重试。',
+    captchaError: '请完成验证后重试。',
+    rateError: '尝试次数过多，请稍候再试。',
+    networkError: '无法连接服务器，请检查网络连接后重试。',
+    checkEmail: '请查收邮件并点击确认链接——您的提交仅在确认后才计入。',
     investmentTypes: [
       '房地产',
       '资本转移',
