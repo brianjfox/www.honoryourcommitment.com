@@ -894,12 +894,66 @@
   font-weight: 700;
   color: var(--navy-800);
 }
+a.link-list__cta,
 .link-list__cta {
-  display: block;
+  display: inline-block;
   font-size: 0.82rem;
   color: var(--gold-600);
   font-weight: 700;
-  margin-top: 0.2rem;
+  margin-top: 0.3rem;
+}
+a.link-list__cta:hover {
+  color: var(--gold-500);
+}
+
+/* ---------- Summary tooltip (news coverage) ---------- */
+.tip {
+  position: relative;
+  display: inline-block;
+}
+.tip__bubble {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  z-index: 40;
+  width: min(340px, 84vw);
+  background: var(--navy-900);
+  color: rgba(255, 255, 255, 0.92);
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 1.5;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.12s ease, transform 0.12s ease,
+    visibility 0.12s ease;
+  pointer-events: none;
+}
+.tip:hover .tip__bubble,
+.tip:focus-within .tip__bubble {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.tip__bubble::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 18px;
+  border: 6px solid transparent;
+  border-bottom-color: var(--navy-900);
+}
+.tip__label {
+  display: block;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-400);
+  margin-bottom: 0.3rem;
 }
 .contact-card {
   padding-block: clamp(32px, 5vw, 56px);

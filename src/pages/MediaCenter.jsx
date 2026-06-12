@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useI18n } from '../i18n/index.jsx'
 import Counter from '../components/Counter.jsx'
 import ActionsBanner from '../components/ActionsBanner.jsx'
-import { COVERAGE, INTERVIEWS } from '../data/media.js'
+import { INTERVIEWS } from '../data/media.js'
 import { CAMPAIGN_STATS } from '../data/cases.js'
 import { API_BASE } from '../config.js'
 
@@ -79,18 +79,9 @@ export default function MediaCenter() {
   // entirely when there are none.
   const pressReleases = useApiList('/api/press-releases', (d) => d.items) || []
 
-  // Live, daily-curated coverage when available; otherwise the static list.
-  const liveCoverage = useLiveCoverage()
-  const coverageItems =
-    liveCoverage ||
-    COVERAGE.map((c) => ({
-      id: c.id,
-      outlet: c.outlet,
-      date: c.date,
-      title: c.title,
-      url: `#${c.id}`,
-      external: false,
-    }))
+  // Live, daily-curated coverage. The section is hidden when there's none —
+  // no static placeholders (which would link nowhere).
+  const coverageItems = useLiveCoverage() || []
 
   const stats = [
     { label: t('stats.signatures'), value: s.signatures },
@@ -168,28 +159,42 @@ export default function MediaCenter() {
       {/* Coverage + interviews */}
       <section className="section section--soft">
         <div className="container grid grid-2">
-          <div>
-            <h2>{t('media.coverage')}</h2>
-            <ul className="link-list">
-              {coverageItems.map((c) => (
-                <li key={c.id}>
-                  <span className="link-list__meta">
-                    {c.outlet}
-                    {c.date ? ` · ${formatDate(c.date, lang)}` : ''}
-                  </span>
-                  <a
-                    href={c.url}
-                    {...(c.external
-                      ? { target: '_blank', rel: 'noopener noreferrer' }
-                      : {})}
-                  >
-                    {c.title}
-                  </a>
-                  <span className="link-list__cta">{t('media.readArticle')} →</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {coverageItems.length > 0 && (
+            <div>
+              <h2>{t('media.coverage')}</h2>
+              <ul className="link-list">
+                {coverageItems.map((c) => (
+                  <li key={c.id}>
+                    <span className="link-list__meta">
+                      {c.outlet}
+                      {c.date ? ` · ${formatDate(c.date, lang)}` : ''}
+                    </span>
+                    <span className="tip">
+                      <a href={c.url} target="_blank" rel="noopener noreferrer">
+                        {c.title}
+                      </a>
+                      {c.summary && (
+                        <span className="tip__bubble" role="tooltip">
+                          <span className="tip__label">
+                            {t('media.summaryLabel')}
+                          </span>
+                          {c.summary}
+                        </span>
+                      )}
+                    </span>
+                    <a
+                      className="link-list__cta"
+                      href={c.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {t('media.readArticle')} →
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           <div>
             <h2>{t('media.interviews')}</h2>
             <ul className="link-list">

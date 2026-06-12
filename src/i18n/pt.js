@@ -218,6 +218,7 @@ export default {
     contactBtn: 'Contactar o gabinete de imprensa',
     download: 'Descarregar',
     readArticle: 'Ler artigo',
+    summaryLabel: 'Resumo',
     watch: 'Ver',
   },
 
