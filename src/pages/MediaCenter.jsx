@@ -1,8 +1,63 @@
+import { useEffect, useState } from 'react'
 import { useI18n } from '../i18n/index.jsx'
 import Counter from '../components/Counter.jsx'
 import ActionsBanner from '../components/ActionsBanner.jsx'
-import { PRESS_RELEASES, COVERAGE, INTERVIEWS } from '../data/media.js'
+import { COVERAGE, INTERVIEWS } from '../data/media.js'
 import { CAMPAIGN_STATS } from '../data/cases.js'
+import { API_BASE } from '../config.js'
+
+// Fetches a JSON endpoint once and returns the array it yields (via `pick`),
+// or null while loading / on failure.
+function useApiList(path, pick) {
+  const [items, setItems] = useState(null)
+  useEffect(() => {
+    let alive = true
+    fetch(`${API_BASE}${path}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!alive) return
+        const list = data && pick(data)
+        if (Array.isArray(list)) setItems(list)
+      })
+      .catch(() => {})
+    return () => {
+      alive = false
+    }
+  }, [path])
+  return items
+}
+
+// Fetches the daily-curated news feed from the API. Falls back to the static
+// COVERAGE list if the feed is empty or unreachable, so the section never
+// renders blank.
+function useLiveCoverage() {
+  const [items, setItems] = useState(null)
+  useEffect(() => {
+    let alive = true
+    fetch(`${API_BASE}/api/news`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!alive || !data || !Array.isArray(data.articles) || !data.articles.length)
+          return
+        setItems(
+          data.articles.map((a) => ({
+            id: a.url,
+            outlet: a.source,
+            date: a.publishedDate,
+            title: a.title,
+            url: a.url,
+            summary: a.summary,
+            external: true,
+          }))
+        )
+      })
+      .catch(() => {})
+    return () => {
+      alive = false
+    }
+  }, [])
+  return items
+}
 
 function formatDate(iso, lang) {
   try {
@@ -19,6 +74,23 @@ function formatDate(iso, lang) {
 export default function MediaCenter() {
   const { t, lang } = useI18n()
   const s = CAMPAIGN_STATS
+
+  // First-party press releases — served from the API; the section is hidden
+  // entirely when there are none.
+  const pressReleases = useApiList('/api/press-releases', (d) => d.items) || []
+
+  // Live, daily-curated coverage when available; otherwise the static list.
+  const liveCoverage = useLiveCoverage()
+  const coverageItems =
+    liveCoverage ||
+    COVERAGE.map((c) => ({
+      id: c.id,
+      outlet: c.outlet,
+      date: c.date,
+      title: c.title,
+      url: `#${c.id}`,
+      external: false,
+    }))
 
   const stats = [
     { label: t('stats.signatures'), value: s.signatures },
@@ -61,26 +133,37 @@ export default function MediaCenter() {
         </div>
       </section>
 
-      {/* Press releases */}
-      <section className="section">
-        <div className="container">
-          <h2>{t('media.pressReleases')}</h2>
-          <div className="media-list">
-            {PRESS_RELEASES.map((pr) => (
-              <article className="card media-item" key={pr.id}>
-                <time className="media-item__date">
-                  {formatDate(pr.date, lang)}
-                </time>
-                <h3>{pr.title}</h3>
-                <p>{pr.summary}</p>
-                <a className="media-item__link" href={`#${pr.id}`}>
-                  {t('media.download')} ↓
-                </a>
-              </article>
-            ))}
+      {/* Press releases — only rendered when the API returns at least one. */}
+      {pressReleases.length > 0 && (
+        <section className="section">
+          <div className="container">
+            <h2>{t('media.pressReleases')}</h2>
+            <div className="media-list">
+              {pressReleases.map((pr) => (
+                <article className="card media-item" key={pr.id}>
+                  {pr.date && (
+                    <time className="media-item__date">
+                      {formatDate(pr.date, lang)}
+                    </time>
+                  )}
+                  <h3>{pr.title}</h3>
+                  <p>{pr.summary}</p>
+                  {pr.url && (
+                    <a
+                      className="media-item__link"
+                      href={pr.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {t('media.readArticle')} →
+                    </a>
+                  )}
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Coverage + interviews */}
       <section className="section section--soft">
@@ -88,12 +171,20 @@ export default function MediaCenter() {
           <div>
             <h2>{t('media.coverage')}</h2>
             <ul className="link-list">
-              {COVERAGE.map((c) => (
+              {coverageItems.map((c) => (
                 <li key={c.id}>
                   <span className="link-list__meta">
-                    {c.outlet} · {formatDate(c.date, lang)}
+                    {c.outlet}
+                    {c.date ? ` · ${formatDate(c.date, lang)}` : ''}
                   </span>
-                  <a href={`#${c.id}`}>{c.title}</a>
+                  <a
+                    href={c.url}
+                    {...(c.external
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {})}
+                  >
+                    {c.title}
+                  </a>
                   <span className="link-list__cta">{t('media.readArticle')} →</span>
                 </li>
               ))}
