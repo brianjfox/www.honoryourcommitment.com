@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Portugal Must Honor Its Commitments">
+  <rect width="64" height="64" rx="14" fill="#0a2342"/>
+  <path d="M32 12 L48 17 V31 C48 42 41 48 32 52 C23 48 16 42 16 31 V17 Z"
+        fill="none" stroke="#c9a14a" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M32 20 L42 23 V31 C42 39 37 43 32 45 C27 43 22 39 22 31 V23 Z"
+        fill="#c9a14a"/>
+</svg>

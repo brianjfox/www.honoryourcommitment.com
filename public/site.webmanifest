@@ -1,0 +1,18 @@
+{
+  "name": "Portugal Must Honor Its Commitments",
+  "short_name": "Honor Commitments",
+  "description": "An advocacy campaign for Golden Visa investors and residency applicants affected by administrative delays and retrospective policy changes in Portugal.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0a2342",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
+    }
+  ]
+}

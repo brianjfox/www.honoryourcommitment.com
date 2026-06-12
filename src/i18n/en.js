@@ -302,6 +302,13 @@ export default {
     accept: 'Got it',
   },
 
+  seo: {
+    tagline:
+      'Legal certainty for Golden Visa investors and residency applicants in Portugal',
+    openLetterDesc:
+      'Our open letter to the Portuguese Government, demanding the timely, lawful processing of delayed residency applications and the restoration of legal certainty.',
+  },
+
   notFound: {
     title: 'Page not found',
     body: 'The page you are looking for does not exist.',

@@ -306,6 +306,13 @@ export default {
     accept: 'Compreendi',
   },
 
+  seo: {
+    tagline:
+      'Segurança jurídica para investidores e requerentes de residência em Portugal',
+    openLetterDesc:
+      'A nossa carta aberta ao Governo Português, exigindo o processamento atempado e legal dos pedidos de residência atrasados e a restauração da segurança jurídica.',
+  },
+
   notFound: {
     title: 'Página não encontrada',
     body: 'A página que procura não existe.',

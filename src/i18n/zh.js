@@ -301,6 +301,12 @@ export default {
     accept: '我知道了',
   },
 
+  seo: {
+    tagline: '为葡萄牙的黄金签证投资者和居留申请人争取法律确定性',
+    openLetterDesc:
+      '我们致葡萄牙政府的公开信，要求及时、合法地处理被延误的居留申请，并恢复法律确定性。',
+  },
+
   notFound: {
     title: '页面未找到',
     body: '您查找的页面不存在。',

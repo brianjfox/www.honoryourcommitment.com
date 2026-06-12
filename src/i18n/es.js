@@ -306,6 +306,13 @@ export default {
     accept: 'Entendido',
   },
 
+  seo: {
+    tagline:
+      'Seguridad jurídica para inversores y solicitantes de residencia en Portugal',
+    openLetterDesc:
+      'Nuestra carta abierta al Gobierno portugués, exigiendo la tramitación puntual y legal de las solicitudes de residencia retrasadas y la restauración de la seguridad jurídica.',
+  },
+
   notFound: {
     title: 'Página no encontrada',
     body: 'La página que busca no existe.',
