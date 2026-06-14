@@ -307,6 +307,15 @@ export default {
     ],
   },
 
+  confirm: {
+    signature: 'Su firma está confirmada — gracias por sumar su voz.',
+    case: 'Su caso está confirmado y añadido a la base probatoria. Gracias.',
+    claimant: 'Su interés en la acción legal está confirmado. Gracias.',
+    generic: 'Su envío está confirmado. Gracias.',
+    invalid: 'Este enlace de confirmación no es válido o ya se ha utilizado.',
+    dismiss: 'Cerrar',
+  },
+
   privacyNotice: {
     text: 'Solo recogemos datos personales cuando usted decide facilitarlos — para firmar la petición, registrar su caso o unirse a la acción legal. No utilizamos cookies de publicidad ni de seguimiento.',
     learnMore: 'Leer nuestra Política de Privacidad',

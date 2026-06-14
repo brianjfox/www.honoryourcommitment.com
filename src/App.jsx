@@ -4,6 +4,7 @@ import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
 import Seo from './components/Seo.jsx'
+import ConfirmBanner from './components/ConfirmBanner.jsx'
 import PrivacyNotice from './components/PrivacyNotice.jsx'
 import Home from './pages/Home.jsx'
 import Petition from './pages/Petition.jsx'
@@ -24,6 +25,7 @@ export default function App() {
       </a>
       <ScrollToTop />
       <Seo />
+      <ConfirmBanner />
       <Header />
       <main id="main">
         <Routes>

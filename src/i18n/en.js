@@ -303,6 +303,15 @@ export default {
     ],
   },
 
+  confirm: {
+    signature: 'Your signature is confirmed — thank you for adding your voice.',
+    case: 'Your case is confirmed and added to the evidence base. Thank you.',
+    claimant: 'Your interest in the legal action is confirmed. Thank you.',
+    generic: 'Your submission is confirmed. Thank you.',
+    invalid: 'This confirmation link is invalid or has already been used.',
+    dismiss: 'Dismiss',
+  },
+
   privacyNotice: {
     text: 'We collect personal data only when you choose to give it — to sign the petition, register your case, or join the legal action. We do not use advertising or tracking cookies.',
     learnMore: 'Read our Privacy Policy',

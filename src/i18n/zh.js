@@ -301,6 +301,15 @@ export default {
     ],
   },
 
+  confirm: {
+    signature: '您的签名已确认——感谢您发出声音。',
+    case: '您的案例已确认并已加入证据库。谢谢。',
+    claimant: '您对法律行动的意向已确认。谢谢。',
+    generic: '您的提交已确认。谢谢。',
+    invalid: '此确认链接无效或已被使用。',
+    dismiss: '关闭',
+  },
+
   privacyNotice: {
     text: '我们仅在您选择提供时收集个人数据——用于签署请愿、登记案例或加入法律行动。我们不使用广告或追踪 Cookie。',
     learnMore: '阅读我们的隐私政策',

@@ -307,6 +307,15 @@ export default {
     ],
   },
 
+  confirm: {
+    signature: 'A sua assinatura está confirmada — obrigado por juntar a sua voz.',
+    case: 'O seu caso está confirmado e adicionado à base de provas. Obrigado.',
+    claimant: 'O seu interesse na ação legal está confirmado. Obrigado.',
+    generic: 'A sua submissão está confirmada. Obrigado.',
+    invalid: 'Este link de confirmação é inválido ou já foi utilizado.',
+    dismiss: 'Dispensar',
+  },
+
   privacyNotice: {
     text: 'Apenas recolhemos dados pessoais quando opta por os fornecer — para assinar a petição, registar o seu caso ou aderir à ação legal. Não utilizamos cookies de publicidade ou de rastreio.',
     learnMore: 'Ler a nossa Política de Privacidade',
