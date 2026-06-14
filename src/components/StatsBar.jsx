@@ -1,6 +1,7 @@
 import { useI18n } from '../i18n/index.jsx'
 import Counter from './Counter.jsx'
 import { CAMPAIGN_STATS } from '../data/cases.js'
+import { useStats } from '../lib/useStats.js'
 
 const eur0 = (n) =>
   '€' +
@@ -15,16 +16,19 @@ function eurCompact(n) {
 
 export default function StatsBar() {
   const { t } = useI18n()
+  const live = useStats()
   const s = CAMPAIGN_STATS
+  // Live value when available, else the static sample figure.
+  const v = (key) => (live && live[key] != null ? live[key] : s[key])
 
   const items = [
-    { label: t('stats.signatures'), value: s.signatures },
-    { label: t('stats.cases'), value: s.cases },
-    { label: t('stats.countries'), value: s.countries },
-    { label: t('stats.years'), value: s.combinedYears },
+    { label: t('stats.signatures'), value: v('signatures') },
+    { label: t('stats.cases'), value: v('cases') },
+    { label: t('stats.countries'), value: v('countries') },
+    { label: t('stats.years'), value: v('combinedYears') },
     {
       label: t('stats.capital'),
-      value: s.capitalInvested,
+      value: v('capitalInvested'),
       format: eurCompact,
     },
   ]
