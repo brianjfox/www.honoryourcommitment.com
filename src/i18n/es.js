@@ -302,6 +302,7 @@ export default {
       'Solicitud presentada, a la espera de decisión',
       'A la espera de la tarjeta de residencia',
       'Renovación pendiente',
+      'Residente, antes de la solicitud de ciudadanía',
       'Solicitud de ciudadanía pendiente',
       'Otro',
     ],

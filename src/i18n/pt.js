@@ -302,6 +302,7 @@ export default {
       'Pedido submetido, a aguardar decisão',
       'A aguardar cartão de residência',
       'Renovação pendente',
+      'Residente, antes do pedido de cidadania',
       'Pedido de cidadania pendente',
       'Outro',
     ],

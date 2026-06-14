@@ -298,6 +298,7 @@ export default {
       'Application submitted, awaiting decision',
       'Awaiting residence card',
       'Renewal pending',
+      'Resident, pre citizenship application',
       'Citizenship application pending',
       'Other',
     ],
