@@ -68,7 +68,7 @@ export default function Footer() {
           <span className="site-footer__legal">
             <Link to="/privacy">{t('footer.privacy')}</Link>
             <span aria-hidden="true">·</span>
-            <a href="#terms">{t('footer.terms')}</a>
+            <Link to="/terms">{t('footer.terms')}</Link>
           </span>
         </div>
       </div>

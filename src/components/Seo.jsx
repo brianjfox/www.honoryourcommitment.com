@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useI18n } from '../i18n/index.jsx'
 import { PRIVACY } from '../data/privacy.js'
+import { TERMS } from '../data/terms.js'
 
 // Canonical origin (apex). Keep in sync with the nginx canonical redirect.
 export const SITE_URL = 'https://honoryourcommitment.com'
@@ -56,6 +57,10 @@ export default function Seo() {
       '/privacy': {
         title: t('footer.privacy'),
         desc: (PRIVACY[lang] || PRIVACY.en).intro,
+      },
+      '/terms': {
+        title: t('footer.terms'),
+        desc: (TERMS[lang] || TERMS.en).intro,
       },
     }
     const r = routes[pathname] || routes['/']

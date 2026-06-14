@@ -14,6 +14,7 @@ import LegalAction from './pages/LegalAction.jsx'
 import MediaCenter from './pages/MediaCenter.jsx'
 import OpenLetter from './pages/OpenLetter.jsx'
 import Privacy from './pages/Privacy.jsx'
+import Terms from './pages/Terms.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 export default function App() {
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="/media" element={<MediaCenter />} />
           <Route path="/open-letter" element={<OpenLetter />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
