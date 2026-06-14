@@ -233,7 +233,7 @@ export default {
       'We do not ask for special treatment. We ask for what was promised: the timely, lawful, and fair processing of our applications, and the restoration of legal certainty.',
       'We respectfully call on the Government to act without further delay.',
     ],
-    demandsTitle: 'We therefore call on the Government to:',
+    demandsTitle: 'We therefore call on the Government:',
     signoff: 'Respectfully,',
     signoffName: 'The signatories of Portugal Must Honor Its Commitments',
     cta: 'Add your name to this letter',
