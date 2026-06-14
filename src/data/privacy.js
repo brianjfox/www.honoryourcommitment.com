@@ -10,8 +10,8 @@
    The English version is authoritative; see the governing-language note.
    ------------------------------------------------------------------ */
 
-const ORG = '[ORGANISATION / CAMPAIGN LEGAL NAME]'
-const ADDRESS = '[REGISTERED POSTAL ADDRESS, EU]'
+const ORG = 'Associação HYC'
+const ADDRESS = 'Rua Regimento 19 de Infantaria 21, Loja 21, 2750-474 Cascais, Portugal'
 const EMAIL = 'privacy@honoryourcommitment.com'
 const DPO_EMAIL = 'dpo@honoryourcommitment.com'
 

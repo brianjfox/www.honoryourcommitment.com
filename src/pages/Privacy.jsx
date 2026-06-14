@@ -17,11 +17,6 @@ export default function Privacy() {
 
       <section className="section">
         <div className="container legal-doc">
-          {/* Template / review notice — remove once finalised by counsel. */}
-          <div className="legal-note" role="note">
-            <strong>⚠ {doc.templateNote}</strong>
-          </div>
-
           <p className="lead">{doc.intro}</p>
 
           {doc.sections.map((sec) => (
