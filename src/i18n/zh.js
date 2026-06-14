@@ -306,7 +306,13 @@ export default {
     case: '您的案例已确认并已加入证据库。谢谢。',
     claimant: '您对法律行动的意向已确认。谢谢。',
     generic: '您的提交已确认。谢谢。',
-    invalid: '此确认链接无效或已被使用。',
+    already: {
+      signature: '您已确认您的签名。',
+      case: '您已确认您的案例。',
+      claimant: '您已确认您对法律行动的意向。',
+      generic: '您已确认您的提交。',
+    },
+    invalid: '确认链接无效。',
     dismiss: '关闭',
   },
 

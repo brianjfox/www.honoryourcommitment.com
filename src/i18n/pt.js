@@ -312,7 +312,13 @@ export default {
     case: 'O seu caso está confirmado e adicionado à base de provas. Obrigado.',
     claimant: 'O seu interesse na ação legal está confirmado. Obrigado.',
     generic: 'A sua submissão está confirmada. Obrigado.',
-    invalid: 'Este link de confirmação é inválido ou já foi utilizado.',
+    already: {
+      signature: 'Já confirmou a sua assinatura.',
+      case: 'Já confirmou o seu caso.',
+      claimant: 'Já confirmou o seu interesse na ação legal.',
+      generic: 'Já confirmou a sua submissão.',
+    },
+    invalid: 'O link de confirmação é inválido.',
     dismiss: 'Dispensar',
   },
 

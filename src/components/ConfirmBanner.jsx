@@ -16,7 +16,7 @@ export default function ConfirmBanner() {
   useEffect(() => {
     const confirmed = params.get('confirmed')
     if (!confirmed) return
-    setNotice({ type: confirmed, ok: params.get('status') === 'confirmed' })
+    setNotice({ type: confirmed, status: params.get('status') })
     const next = new URLSearchParams(params)
     next.delete('confirmed')
     next.delete('status')
@@ -27,21 +27,24 @@ export default function ConfirmBanner() {
 
   if (!notice) return null
 
-  const key = notice.ok
-    ? KNOWN_TYPES.includes(notice.type)
-      ? `confirm.${notice.type}`
-      : 'confirm.generic'
-    : 'confirm.invalid'
+  const { type, status } = notice
+  const ok = status === 'confirmed' || status === 'already_confirmed'
+  const known = KNOWN_TYPES.includes(type)
+  let key
+  if (status === 'confirmed') key = known ? `confirm.${type}` : 'confirm.generic'
+  else if (status === 'already_confirmed')
+    key = known ? `confirm.already.${type}` : 'confirm.already.generic'
+  else key = 'confirm.invalid'
 
   return (
     <div
-      className={'confirm-banner ' + (notice.ok ? 'is-ok' : 'is-info')}
+      className={'confirm-banner ' + (ok ? 'is-ok' : 'is-info')}
       role="status"
       aria-live="polite"
     >
       <div className="container confirm-banner__inner">
         <span className="confirm-banner__icon" aria-hidden="true">
-          {notice.ok ? '✓' : 'i'}
+          {ok ? '✓' : 'i'}
         </span>
         <span className="confirm-banner__msg">{t(key)}</span>
         <button

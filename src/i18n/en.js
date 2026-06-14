@@ -308,7 +308,13 @@ export default {
     case: 'Your case is confirmed and added to the evidence base. Thank you.',
     claimant: 'Your interest in the legal action is confirmed. Thank you.',
     generic: 'Your submission is confirmed. Thank you.',
-    invalid: 'This confirmation link is invalid or has already been used.',
+    already: {
+      signature: 'You have already confirmed your signature.',
+      case: 'You have already confirmed your case.',
+      claimant: 'You have already confirmed your interest in the legal action.',
+      generic: 'You have already confirmed your submission.',
+    },
+    invalid: 'The confirmation link is invalid.',
     dismiss: 'Dismiss',
   },
 

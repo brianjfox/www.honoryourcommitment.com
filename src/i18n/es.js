@@ -312,7 +312,13 @@ export default {
     case: 'Su caso está confirmado y añadido a la base probatoria. Gracias.',
     claimant: 'Su interés en la acción legal está confirmado. Gracias.',
     generic: 'Su envío está confirmado. Gracias.',
-    invalid: 'Este enlace de confirmación no es válido o ya se ha utilizado.',
+    already: {
+      signature: 'Ya ha confirmado su firma.',
+      case: 'Ya ha confirmado su caso.',
+      claimant: 'Ya ha confirmado su interés en la acción legal.',
+      generic: 'Ya ha confirmado su envío.',
+    },
+    invalid: 'El enlace de confirmación no es válido.',
     dismiss: 'Cerrar',
   },
 
