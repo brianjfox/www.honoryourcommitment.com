@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { useI18n } from '../i18n/index.jsx'
 import Counter from '../components/Counter.jsx'
 import ActionsBanner from '../components/ActionsBanner.jsx'
-import { CAMPAIGN_STATS } from '../data/cases.js'
+import { useStats } from '../lib/useStats.js'
+import { eurCompact } from '../lib/format.js'
 import { API_BASE } from '../config.js'
 
 // Fetches a JSON endpoint once and returns the array it yields (via `pick`),
@@ -72,7 +73,9 @@ function formatDate(iso, lang) {
 
 export default function MediaCenter() {
   const { t, lang } = useI18n()
-  const s = CAMPAIGN_STATS
+  const live = useStats()
+  // Live figures from /api/stats (confirmed records only); 0 until loaded.
+  const v = (k) => (live && live[k] != null ? live[k] : 0)
 
   // First-party press releases — served from the API; the section is hidden
   // entirely when there are none.
@@ -83,13 +86,13 @@ export default function MediaCenter() {
   const coverageItems = useLiveCoverage() || []
 
   const stats = [
-    { label: t('stats.signatures'), value: s.signatures },
-    { label: t('stats.cases'), value: s.cases },
-    { label: t('stats.countries'), value: s.countries },
+    { label: t('stats.signatures'), value: v('signatures') },
+    { label: t('stats.cases'), value: v('cases') },
+    { label: t('stats.countries'), value: v('countries') },
     {
       label: t('stats.capital'),
-      value: s.capitalInvested,
-      format: (n) => '€' + (n / 1e9).toFixed(2) + 'B',
+      value: v('capitalInvested'),
+      format: eurCompact,
     },
   ]
 

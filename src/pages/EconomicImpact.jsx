@@ -3,16 +3,7 @@ import Counter from '../components/Counter.jsx'
 import BarChart from '../components/BarChart.jsx'
 import ActionsBanner from '../components/ActionsBanner.jsx'
 import { useStats } from '../lib/useStats.js'
-
-// Compact euro formatting that reads well at any real magnitude (€0, €50k,
-// €12.4M, €1.28B) — the figures come straight from the database, so we can't
-// assume they're always in the billions.
-function eurCompact(n) {
-  if (n >= 1e9) return '€' + (n / 1e9).toFixed(2) + 'B'
-  if (n >= 1e6) return '€' + (n / 1e6).toFixed(1) + 'M'
-  if (n >= 1e3) return '€' + Math.round(n / 1e3) + 'k'
-  return '€' + Math.round(n)
-}
+import { eurCompact } from '../lib/format.js'
 
 export default function EconomicImpact() {
   const { t } = useI18n()

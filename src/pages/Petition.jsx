@@ -12,7 +12,7 @@ import {
   submitErrorMessage,
 } from '../components/Form.jsx'
 import { COUNTRIES } from '../data/countries.js'
-import { CAMPAIGN_STATS } from '../data/cases.js'
+import { useStats } from '../lib/useStats.js'
 import { postJSON } from '../lib/api.js'
 import Turnstile from '../components/Turnstile.jsx'
 import ActionsBanner from '../components/ActionsBanner.jsx'
@@ -21,6 +21,7 @@ import CTAGroup from '../components/CTAGroup.jsx'
 export default function Petition() {
   const { t, lang } = useI18n()
   const v = useValidators()
+  const live = useStats()
   const [token, setToken] = useState(null)
   const form = useForm({
     firstName: '',
@@ -63,7 +64,7 @@ export default function Petition() {
           <h1>{t('petition.title')}</h1>
           <p className="lead">{t('petition.intro')}</p>
           <div className="page-hero__signed">
-            <strong>{CAMPAIGN_STATS.signatures.toLocaleString()}+</strong>{' '}
+            <strong>{(live?.signatures ?? 0).toLocaleString()}+</strong>{' '}
             {t('stats.signatures').toLowerCase()}
           </div>
         </div>

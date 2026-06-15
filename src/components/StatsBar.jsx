@@ -1,25 +1,13 @@
 import { useI18n } from '../i18n/index.jsx'
 import Counter from './Counter.jsx'
-import { CAMPAIGN_STATS } from '../data/cases.js'
 import { useStats } from '../lib/useStats.js'
-
-const eur0 = (n) =>
-  '€' +
-  Math.round(n).toLocaleString(undefined, { maximumFractionDigits: 0 })
-
-// Compact euro formatting for very large figures (e.g. €1.28B).
-function eurCompact(n) {
-  if (n >= 1e9) return '€' + (n / 1e9).toFixed(2) + 'B'
-  if (n >= 1e6) return '€' + (n / 1e6).toFixed(0) + 'M'
-  return eur0(n)
-}
+import { eurCompact } from '../lib/format.js'
 
 export default function StatsBar() {
   const { t } = useI18n()
   const live = useStats()
-  const s = CAMPAIGN_STATS
-  // Live value when available, else the static sample figure.
-  const v = (key) => (live && live[key] != null ? live[key] : s[key])
+  // Live figures from /api/stats (confirmed records only); 0 until loaded.
+  const v = (key) => (live && live[key] != null ? live[key] : 0)
 
   const items = [
     { label: t('stats.signatures'), value: v('signatures') },

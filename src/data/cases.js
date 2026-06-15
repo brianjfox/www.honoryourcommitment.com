@@ -159,44 +159,7 @@ export const INVESTMENT_TYPE_KEYS = {
   other: 5,
 }
 
-// Derived aggregate statistics used across the site. Figures combine the
-// representative case base with campaign tallies to date.
-export const CAMPAIGN_STATS = {
-  signatures: 12480,
-  cases: 1342,
-  countries: 47,
-  combinedYears: 6710,
-  capitalInvested: 1284000000, // EUR
-  avgWait: 5.1,
-  beyondStatutory: 1190,
-  familiesAffected: 4120,
-  feesPaid: 38600000,
-  jobsSupported: 5400,
-}
-
-export const CAPITAL_BY_COUNTRY = [
-  { country: 'China', value: 412 },
-  { country: 'Brazil', value: 286 },
-  { country: 'United States', value: 198 },
-  { country: 'India', value: 121 },
-  { country: 'Türkiye', value: 96 },
-  { country: 'South Africa', value: 74 },
-  { country: 'United Kingdom', value: 58 },
-  { country: 'Other', value: 39 },
-] // EUR millions
-
-export const PENDING_BY_YEAR = [
-  { year: '2019', value: 86 },
-  { year: '2020', value: 372 },
-  { year: '2021', value: 418 },
-  { year: '2022', value: 311 },
-  { year: '2023', value: 155 },
-]
-
-export const INVESTMENT_BY_ROUTE = [
-  { route: 'realestate', value: 46 },
-  { route: 'fund', value: 27 },
-  { route: 'capital', value: 16 },
-  { route: 'business', value: 8 },
-  { route: 'culture', value: 3 },
-] // percentage
+// NOTE: Campaign statistics (totals, capital, wait times, breakdowns) are NOT
+// stored here — they are computed live from the database and served by the API
+// at /api/stats. The frontend reads them via src/lib/useStats.js. Do not
+// reintroduce hard-coded figures; they would be inaccurate.
