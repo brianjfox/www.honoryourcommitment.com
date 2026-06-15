@@ -2,26 +2,27 @@ import { useI18n } from '../i18n/index.jsx'
 import Counter from '../components/Counter.jsx'
 import BarChart from '../components/BarChart.jsx'
 import ActionsBanner from '../components/ActionsBanner.jsx'
-import {
-  CAMPAIGN_STATS,
-  CAPITAL_BY_COUNTRY,
-  PENDING_BY_YEAR,
-  INVESTMENT_BY_ROUTE,
-} from '../data/cases.js'
 import { useStats } from '../lib/useStats.js'
 
-const eurB = (n) => '€' + (n / 1e9).toFixed(2) + 'B'
+// Compact euro formatting that reads well at any real magnitude (€0, €50k,
+// €12.4M, €1.28B) — the figures come straight from the database, so we can't
+// assume they're always in the billions.
+function eurCompact(n) {
+  if (n >= 1e9) return '€' + (n / 1e9).toFixed(2) + 'B'
+  if (n >= 1e6) return '€' + (n / 1e6).toFixed(1) + 'M'
+  if (n >= 1e3) return '€' + Math.round(n / 1e3) + 'k'
+  return '€' + Math.round(n)
+}
 
 export default function EconomicImpact() {
   const { t } = useI18n()
   const live = useStats()
-  const s = CAMPAIGN_STATS
-  const v = (k) => (live && live[k] != null ? live[k] : s[k])
-  const typeLabels = t('form.investmentTypes')
-  const routeIndex = { realestate: 0, capital: 1, fund: 2, business: 3, culture: 4 }
+  // All figures come from /api/stats (confirmed records only). Until the fetch
+  // resolves we show 0 — never invented placeholder numbers.
+  const v = (k) => (live && live[k] != null ? live[k] : 0)
 
   const metrics = [
-    { label: t('impact.metrics.capital'), value: v('capitalInvested'), format: eurB },
+    { label: t('impact.metrics.capital'), value: v('capitalInvested'), format: eurCompact },
     {
       label: t('impact.metrics.avgWait'),
       value: v('avgWait'),
@@ -33,28 +34,21 @@ export default function EconomicImpact() {
     { label: t('stats.cases'), value: v('cases') },
   ]
 
-  // Charts: live breakdowns when present, else static samples.
-  const byCountry = (live?.capitalByCountry || CAPITAL_BY_COUNTRY).map((d) => ({
+  // Chart breakdowns, all from the live aggregates (empty until loaded).
+  const byCountry = (live?.capitalByCountry || []).map((d) => ({
     label: d.country,
     value: d.value,
   }))
-  const byYear = (live?.pendingByYear || PENDING_BY_YEAR).map((d) => ({
+  const byYear = (live?.pendingByYear || []).map((d) => ({
     label: d.year,
     value: d.value,
   }))
-  let byRoute
-  if (live?.investmentByRoute) {
-    const total = live.investmentByRoute.reduce((a, d) => a + d.value, 0) || 1
-    byRoute = live.investmentByRoute.map((d) => ({
-      label: d.route,
-      value: Math.round((d.value / total) * 100),
-    }))
-  } else {
-    byRoute = INVESTMENT_BY_ROUTE.map((d) => ({
-      label: typeLabels[routeIndex[d.route]] ?? d.route,
-      value: d.value,
-    }))
-  }
+  const routeTotal =
+    (live?.investmentByRoute || []).reduce((a, d) => a + d.value, 0) || 1
+  const byRoute = (live?.investmentByRoute || []).map((d) => ({
+    label: d.route,
+    value: Math.round((d.value / routeTotal) * 100),
+  }))
 
   return (
     <>
