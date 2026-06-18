@@ -215,6 +215,7 @@ export default {
     contactBtn: '联系新闻办公室',
     download: '下载',
     readArticle: '阅读文章',
+    readMore: '阅读更多…',
     summaryLabel: '摘要',
     watch: '观看',
   },

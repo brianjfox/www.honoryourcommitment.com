@@ -216,6 +216,7 @@ export default {
     contactBtn: 'Contact the press office',
     download: 'Download',
     readArticle: 'Read article',
+    readMore: 'Read more…',
     summaryLabel: 'Summary',
     watch: 'Watch',
   },

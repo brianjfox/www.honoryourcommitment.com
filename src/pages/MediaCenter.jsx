@@ -170,27 +170,27 @@ export default function MediaCenter() {
                     {c.outlet}
                     {c.date ? ` · ${formatDate(c.date, lang)}` : ''}
                   </span>
-                  <span className="tip">
-                    <a href={c.url} target="_blank" rel="noopener noreferrer">
-                      {c.title}
-                    </a>
-                    {c.summary && (
-                      <span className="tip__bubble" role="tooltip">
-                        <span className="tip__label">
-                          {t('media.summaryLabel')}
-                        </span>
-                        {c.summary}
-                      </span>
-                    )}
-                  </span>
                   <a
-                    className="link-list__cta"
+                    className="link-list__title"
                     href={c.url}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {t('media.readArticle')} →
+                    {c.title}
                   </a>
+                  {c.summary && (
+                    <p className="link-list__summary">
+                      {c.summary}{' '}
+                      <a
+                        className="link-list__more"
+                        href={c.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {t('media.readMore')}
+                      </a>
+                    </p>
+                  )}
                 </li>
               ))}
             </ul>

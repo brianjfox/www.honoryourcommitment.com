@@ -894,6 +894,22 @@
   font-weight: 700;
   color: var(--navy-800);
 }
+.link-list__title {
+  display: inline-block;
+}
+.link-list__summary {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.link-list a.link-list__more {
+  color: var(--gold-600);
+  white-space: nowrap;
+}
+.link-list a.link-list__more:hover {
+  color: var(--gold-500);
+}
 a.link-list__cta,
 .link-list__cta {
   display: inline-block;

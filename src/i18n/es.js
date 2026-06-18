@@ -218,6 +218,7 @@ export default {
     contactBtn: 'Contactar con la oficina de prensa',
     download: 'Descargar',
     readArticle: 'Leer artículo',
+    readMore: 'Leer más…',
     summaryLabel: 'Resumen',
     watch: 'Ver',
   },
